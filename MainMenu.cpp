@@ -1440,6 +1440,7 @@ cMainMenuWidget_Text *gpTextureFilterText=NULL;
 cMainMenuWidget_Text *gpTextureAnisotropyText=NULL;
 cMainMenuWidget_Text *gpGammaText=NULL;
 cMainMenuWidget_Text *gpGammaText2=NULL;
+cMainMenuWidget_Text *gpFOVText=NULL;
 cMainMenuWidget_Text *gpFSAAText=NULL;
 cMainMenuWidget_Text *gpDoFText=NULL;
 
@@ -1459,6 +1460,57 @@ int glShaderQualityNum = 4;
 
 
 cMainMenuWidget_Text *gpNoiseFilterText=NULL;
+
+//------------------------------------------------------------
+
+class cMainMenuWidget_FOV : public cMainMenuWidget_Button
+{
+public:
+	cMainMenuWidget_FOV(cInit *apInit, const cVector3f &avPos, const tWString& asText,cVector2f avFontSize, eFontAlign aAlignment,
+							int alGNum)
+		: cMainMenuWidget_Button(apInit,avPos,asText,eMainMenuState_LastEnum,avFontSize,aAlignment)
+	{
+		mfMax = 90.0f;
+		mfMin = 70.0f;
+		mfStep = 2.5f;
+		
+		//mlGNum = alGNum;
+
+		msTip = kTranslate("MainMenu", "TipGraphicsFOV");
+	}
+
+	void OnMouseDown(eMButton aButton)
+	{
+        mfFOV = cMath::ToDeg(mpInit->mpPlayer->GetCamera()->GetFOV());
+
+		if(aButton == eMButton_Left)
+		{
+			mfFOV += mfStep;
+			if(mfFOV >mfMax) mfFOV = mfMax;
+		}
+		else if(aButton == eMButton_Right)
+		{
+			mfFOV -= mfStep;
+			if(mfFOV < mfMin) mfFOV = mfMin;
+		}
+
+		//mpInit->mpGame->GetGraphics()->GetLowLevel()->SetGammaCorrection(mfGamma);
+        mpInit->mpPlayer->GetCamera()->SetFOV(cMath::ToRad(mfFOV));
+		
+		char sTempVec[256];
+		sprintf(sTempVec,"%.1f",mfFOV);
+		
+		gpFOVText->msText = cString::To16Char(sTempVec);
+		//if(mlGNum == 1)
+		//	gpGammaText2->msText = cString::To16Char(sTempVec);
+	}
+
+	float mfFOV;
+	float mfMax;
+	float mfMin;
+	float mfStep;
+	//int mlGNum;
+};
 
 //------------------------------------------------------------
 
@@ -3471,6 +3523,9 @@ void cMainMenu::CreateWidgets()
 	vPos.y += 29;
 	cMainMenuWidget *pWidgetGamma = hplNew( cMainMenuWidget_Gamma,(mpInit,vPos,kTranslate("MainMenu","Gamma:"),20,eFontAlign_Right,0) );
 	AddWidgetToState(eMainMenuState_OptionsGraphics,pWidgetGamma); 
+	vPos.y += 29; // Increment where the text will show up
+    cMainMenuWidget *pWidgetFOV = hplNew( cMainMenuWidget_FOV,(mpInit,vPos,kTranslate("MainMenu","Field of View:"),20,eFontAlign_Right,0) );
+	AddWidgetToState(eMainMenuState_OptionsGraphics,pWidgetFOV); 
 	vPos.y += 29;
 	cMainMenuWidget *pWidgetShaderQuality = hplNew( cMainMenuWidget_ShaderQuality,(mpInit,vPos,kTranslate("MainMenu","Shader Quality:"),20,eFontAlign_Right) );
 	AddWidgetToState(eMainMenuState_OptionsGraphics,pWidgetShaderQuality); 
@@ -3512,6 +3567,13 @@ void cMainMenu::CreateWidgets()
 	gpGammaText = hplNew( cMainMenuWidget_Text,(mpInit,vPos,sText,20,eFontAlign_Left) );
 	AddWidgetToState(eMainMenuState_OptionsGraphics,gpGammaText);
 	gpGammaText->SetExtraWidget(pWidgetGamma);
+
+    vPos.y += 29;
+    sprintf(sTempVec,"%.1f",cMath::ToDeg(mpInit->mpPlayer->GetCamera()->GetFOV()));
+	sText = cString::To16Char(sTempVec);
+	gpFOVText = hplNew( cMainMenuWidget_Text,(mpInit,vPos,sText,20,eFontAlign_Left) );
+	AddWidgetToState(eMainMenuState_OptionsGraphics,gpFOVText);
+	gpFOVText->SetExtraWidget(pWidgetFOV);
 
 	vPos.y += 29;
 	sText = kTranslate("MainMenu",gvShaderQuality[iMaterial::GetQuality()]);
