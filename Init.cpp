@@ -804,6 +804,11 @@ void cInit::Exit()
 	mpConfig->SetFloat("Graphics","TextureAnisotropy",mpGame->GetResources()->GetMaterialManager()->GetTextureAnisotropy());
 
 	mpConfig->SetFloat("Graphics","Gamma",mpGame->GetGraphics()->GetLowLevel()->GetGammaCorrection());
+    // Store it in degrees
+    if (mpPlayer != NULL)
+        mpConfig->SetFloat("Graphics","FOV",cMath::ToDeg(mpPlayer->GetCamera()->GetFOV()));
+    else
+        mpConfig->SetFloat("Graphics","FOV",70.0f);
 
 	mpConfig->SetInt("Graphics","FSAA",mlFSAA);
 	mpConfig->SetBool("Graphics","PostEffects",mbPostEffects);

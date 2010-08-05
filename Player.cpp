@@ -1355,7 +1355,7 @@ void cPlayer::Reset()
 	//Camera
 	mpCamera->SetPitchLimits(cVector2f(cMath::ToRad(70),cMath::ToRad(-70) ));
 	mpCamera->SetYawLimits(0);
-	mpCamera->SetFOV(cMath::ToRad(70));
+	mpCamera->SetFOV(cMath::ToRad(mpInit->mpConfig->GetFloat("Graphics", "FOV", 70.0f)));
 
 	cVector2f vScreenSize = mpInit->mpGame->GetGraphics()->GetLowLevel()->GetScreenSize();
 	mpCamera->SetAspect(vScreenSize.x / vScreenSize.y);
