@@ -111,7 +111,7 @@ class cGameItemType_Battery : public cGameItemType
 public:
 	cGameItemType_Battery(cInit *apInit);
 
-	bool OnPickUp(cInventoryItem *apItem, bool abInGame);
+	bool OnAction(cInventoryItem *apItem, int alActionNum);
 
 };
 //----------------------------------------------

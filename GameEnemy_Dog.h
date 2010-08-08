@@ -106,7 +106,9 @@ public:
 
 	void OnSeePlayer(const cVector3f &avPosition, float afChance);
 	bool OnHearNoise(const cVector3f &avPosition, float afVolume);
-	void OnFlashlight(const cVector3f &avPosition){}
+	void OnFlashlight(const cVector3f &avPosition){
+mpEnemy->SetTempPosition(avPosition);
+	mpEnemy->ChangeState(STATE_DEAD);}
 
 	void OnDraw();
 private:
@@ -144,7 +146,11 @@ public:
 
 	  void OnSeePlayer(const cVector3f &avPosition, float afChance){}
 	  bool OnHearNoise(const cVector3f &avPosition, float afVolume){return false;}
-	  void OnFlashlight(const cVector3f &avPosition){}
+	  void OnFlashlight(const cVector3f &avPosition){
+
+mpEnemy->SetTempPosition(avPosition);
+	mpEnemy->ChangeState(STATE_DEAD);}
+
 private:
 	float mfDamageTimer;
 	float mfJumpTimer;
@@ -171,7 +177,8 @@ public:
 
 	  void OnSeePlayer(const cVector3f &avPosition, float afChance){}
 	  bool OnHearNoise(const cVector3f &avPosition, float afVolume){return false;}
-	  void OnFlashlight(const cVector3f &avPosition){}
+	  void OnFlashlight(const cVector3f &avPosition){
+mpEnemy->ChangeState(STATE_DEAD);}
 private:
 	float mfDamageTimer;
 	float mfStopMoveTimer;
@@ -196,7 +203,8 @@ public:
 
 	  bool OnHearNoise(const cVector3f &avPosition, float afVolume){return false;}
 	  void OnSeePlayer(const cVector3f &avPosition, float afChance){}
-	  void OnFlashlight(const cVector3f &avPosition){}
+	  void OnFlashlight(const cVector3f &avPosition){
+mpEnemy->ChangeState(STATE_DEAD);}
 private:
 	float mfTimer;
 	float mfBackAngle;
@@ -222,7 +230,8 @@ public:
 	  void OnSeePlayer(const cVector3f &avPosition, float afChance){}
 	  bool OnHearNoise(const cVector3f &avPosition, float afVolume){return false;}
 	  //void OnTakeHit(float afDamage){}
-	  void OnFlashlight(const cVector3f &avPosition){}
+	  void OnFlashlight(const cVector3f &avPosition){
+mpEnemy->ChangeState(STATE_DEAD);}
 
 	  void OnAnimationOver(const tString &asName);
 
@@ -247,7 +256,8 @@ public:
 	  void OnSeePlayer(const cVector3f &avPosition, float afChance){}
 	  bool OnHearNoise(const cVector3f &avPosition, float afVolume){return false;}
 	  void OnTakeHit(float afDamage){}
-	  void OnFlashlight(const cVector3f &avPosition){}
+	  void OnFlashlight(const cVector3f &avPosition){
+mpEnemy->ChangeState(STATE_DEAD);}
 
 	  void OnAnimationOver(const tString &asName);
 

@@ -141,7 +141,10 @@ public:
 	  void OnUpdate(float afTimeStep);
 
 	  void OnSeePlayer(const cVector3f &avPosition, float afChance){}
-	  void OnFlashlight(const cVector3f &avPosition){}
+	  void OnFlashlight(const cVector3f &avPosition){
+
+mpEnemy->SetTempPosition(avPosition);
+	mpEnemy->ChangeState(STATE_DEAD);}
 private:
 	float mfTimer;
 	float mfBackAngle;

@@ -69,7 +69,7 @@ void iGameEnemyState_Spider_Base::OnTakeHit(float afDamage)
 {
 	if(afDamage >= 5)
 	{
-		mpEnemy->ChangeState(STATE_KNOCKDOWN);
+		mpEnemy->ChangeState(STATE_DEAD);
 	}
 }
 
@@ -77,14 +77,14 @@ void iGameEnemyState_Spider_Base::OnFlashlight(const cVector3f &avPosition)
 {
 	//mpInit->mpEffectHandler->GetSubTitle()->Add("Flashlight!",0.5f);
 	//OnSeePlayer(mpPlayer->GetCharacterBody()->GetFeetPosition(),1.0f);
-	if(mlId == STATE_KNOCKDOWN) return;
+	if(mlId == STATE_DEAD) return;
 	
-	if(mpEnemySpider->mbFleeFromFlashlight) mpEnemy->ChangeState(STATE_FLEE);
+	if(mpEnemySpider->mbFleeFromFlashlight) mpEnemy->ChangeState(STATE_DEAD);
 }
 
 void iGameEnemyState_Spider_Base::OnDeath(float afDamage)
 {
-	mpEnemy->ChangeState(STATE_KNOCKDOWN);
+	mpEnemy->ChangeState(STATE_DEAD);
 	//mpEnemy->ChangeState(STATE_DEAD);
 }
 

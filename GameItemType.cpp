@@ -193,10 +193,24 @@ cGameItemType_Battery::cGameItemType_Battery(cInit *apInit)
 	mvNonDropActions[0] = kTranslate("Inventory", "Read");
 }
 
-bool cGameItemType_Battery::OnPickUp(cInventoryItem *apItem, bool abInGame)
+bool cGameItemType_Battery::OnAction(cInventoryItem *apItem, int alActionNum)
 {
-	mpInit->mpPlayer->AddPower(10.0f);
-	return false;
+	//////////////
+	//USE
+	if(alActionNum == 0)
+	{
+		mpInit->mpGame->GetSound()->GetSoundHandler()->PlayGui("player_use_battery",false,1);
+		
+		mpInit->mpPlayer->AddPower(30.0f);
+		
+		apItem->AddCount(-1);
+		if(apItem->GetCount()<=0)
+		{
+			mpInit->mpInventory->RemoveItem(apItem);
+		}
+	}
+
+	return true;
 }
 
 //-----------------------------------------------------------------------

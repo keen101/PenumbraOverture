@@ -128,7 +128,7 @@ void iGameEnemyState_Dog_Base::OnFlashlight(const cVector3f &avPosition)
 	//mpEnemy->ChangeState(STATE_HUNT);
 
 	mpEnemy->SetTempPosition(avPosition);
-	mpEnemy->ChangeState(STATE_INVESTIGATE);
+	mpEnemy->ChangeState(STATE_DEAD);
 }
 
 void iGameEnemyState_Dog_Base::OnDeath(float afDamage)
@@ -439,7 +439,7 @@ bool cGameEnemyState_Dog_Attention::OnHearNoise(const cVector3f &avPosition, flo
 }
 void cGameEnemyState_Dog_Attention::OnFlashlight(const cVector3f &avPosition)
 {
-	mpEnemy->ChangeState(STATE_HUNT);
+	mpEnemy->ChangeState(STATE_DEAD);
 }
 
 //-----------------------------------------------------------------------
@@ -974,6 +974,7 @@ void cGameEnemyState_Dog_Hunt::OnSeePlayer(const cVector3f &avPosition, float af
 	}
 }
 
+
 //-----------------------------------------------------------------------
 
 bool cGameEnemyState_Dog_Hunt::OnHearNoise(const cVector3f &avPosition, float afVolume)
@@ -1081,6 +1082,7 @@ void cGameEnemyState_Dog_Attack::OnLeaveState(iGameEnemyState *apNextState)
 }
 
 //-----------------------------------------------------------------------
+
 
 void cGameEnemyState_Dog_Attack::OnUpdate(float afTimeStep)
 {
